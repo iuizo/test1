@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHONE Stickers with Colors</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  margin:0; padding:0;
+  background:#ff7f50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+
+.device-wrapper {
+  position: relative;
+  width: 350px;
+  height: 500px;
+  margin-bottom: 20px;
+}
+.device-wrapper .device {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: bold;
+  border: 3px solid white;
+  color: white;
+  transition: 0.3s;
+}
+
+.tab-btn.black { background: black; }
+.tab-btn.pink { background: #FF69B4; }
+.tab-btn.blue { background: #1E90FF; }
+.tab-btn.green { background: #228B22; }
+.tab-btn.red { background: #FF0000; }
+.tab-btn.yellow { background: #FFD700; }
+
+.tab-btn.active {
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  transform: scale(1.05);
+}
+
+
+.stickers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 80px);
+  gap: 10px;
+  justify-content: center;
+}
+
+.stickers-grid img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.stickers-grid img:hover {
+  border: 2px solid #fff;
+  transform: scale(1.05);
+}
+
+
+.tab-content { display:none; }
+.tab-content.active { display:block; }
+
+
+button#clearAll {
+  margin-bottom: 20px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<h1 style="color:white;">PICK YOUR STICKERS & COLORS</h1>
+
+
+<div class="tabs">
+  <button class="tab-btn black active" data-tab="black">BLACK</button>
+  <button class="tab-btn pink" data-tab="pink">PINK</button>
+  <button class="tab-btn blue" data-tab="blue">BLUE</button>
+  <button class="tab-btn green" data-tab="green">GREEN</button>
+  <button class="tab-btn red" data-tab="red">REE</button>
+  <button class="tab-btn yellow" data-tab="yellow">YELLOW</button>
+</div>
+
+
+<button id="clearAll">CLEAR ALL STICKERS</button>
+
+
+<div class="device-wrapper" id="ipadWrapper">
+  <img src="iPadPR.png" alt="iPad" class="device">
+</div>
+
+
+<div id="black" class="tab-content active">
+  <div class="stickers-grid">
+    <img src="pblack1.png">
+    <img src="pblack2.png">
+    <img src="pblack3.png">
+	<img src="pblack4.png">
+	<img src="pblack5.png">
+	<img src="st1.png">
+  </div>
+</div>
+<div id="pink" class="tab-content">
+  <div class="stickers-grid">
+    <img src="ppink1.png">
+    <img src="ppink2.png">
+    <img src="ppink3.png">
+	<img src="ppink4.png">
+    <img src="ppink5.png">
+    <img src="st2.png">
+  </div>
+</div>
+<div id="blue" class="tab-content">
+  <div class="stickers-grid">
+    <img src="pblue1.png">
+    <img src="pblue2.png">
+    <img src="pblue3.png">
+	<img src="pblue4.png">
+    <img src="pblue5.png">
+    <img src="pblue6.png">
+  </div>
+</div>
+<div id="green" class="tab-content">
+  <div class="stickers-grid">
+    <img src="pgreen1.png">
+    <img src="pgreen2.png">
+    <img src="pgreen3.png">
+	 <img src="pgreen4.png">
+    <img src="st3.png">
+    <img src="st13.png">
+  </div>
+</div>
+<div id="red" class="tab-content">
+  <div class="stickers-grid">
+    <img src="pred1.png">
+    <img src="pred2.png">
+    <img src="pred3.png">
+	 <img src="st4.png">
+    <img src="st11.png">
+    <img src="st16.png">
+  </div>
+</div>
+<div id="yellow" class="tab-content">
+  <div class="stickers-grid">
+    <img src="pyellow1.png">
+    <img src="pyellow2.png">
+    <img src="pyellow3.png">
+	<img src="st5.png">
+    <img src="st15.png">
+    <img src="st9.png">
+  </div>
+</div>
+
+<script>
+
+const buttons = document.querySelectorAll('.tab-btn');
+const contents = document.querySelectorAll('.tab-content');
+
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    buttons.forEach(b => b.classList.remove('active'));
+    contents.forEach(c => c.classList.remove('active'));
+
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
+});
+
+
+const ipadWrapper = document.getElementById('ipadWrapper');
+const allStickers = document.querySelectorAll('.stickers-grid img');
+const clearBtn = document.getElementById('clearAll');
+
+allStickers.forEach(sticker => {
+  sticker.addEventListener('mousedown', e => {
+    e.preventDefault();
+
+    const newSticker = document.createElement('img');
+    newSticker.src = e.target.src;
+    newSticker.style.position = 'absolute';
+    newSticker.style.width = '80px';
+    newSticker.style.cursor = 'grab';
+    ipadWrapper.appendChild(newSticker);
+
+    const rect = ipadWrapper.getBoundingClientRect();
+    let shiftX = e.clientX - rect.left - 40;
+    let shiftY = e.clientY - rect.top - 40;
+
+    newSticker.style.left = shiftX + 'px';
+    newSticker.style.top = shiftY + 'px';
+
+    let isDragging = false;
+
+    function onMouseMove(e) {
+      isDragging = true;
+      let newX = e.clientX - rect.left - 40;
+      let newY = e.clientY - rect.top - 40;
+
+      newX = Math.max(0, Math.min(rect.width - 80, newX));
+      newY = Math.max(0, Math.min(rect.height - 80, newY));
+
+      newSticker.style.left = newX + 'px';
+      newSticker.style.top = newY + 'px';
+    }
+
+    document.addEventListener('mousemove', onMouseMove);
+
+    document.addEventListener('mouseup', function onMouseUp() {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    });
+
+    newSticker.addEventListener('click', e => {
+      if(!isDragging) newSticker.remove();
+    });
+  });
+});
+
+clearBtn.addEventListener('click', () => {
+  const placedStickers = ipadWrapper.querySelectorAll('img');
+  placedStickers.forEach(img => {
+    if(!img.classList.contains('device')) img.remove();
+  });
+});
+</script>
+</body>
+</html>

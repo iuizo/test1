@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>اختر جهازك</title>
+<style>
+  body { font-family: Arial; text-align:center; margin:0; padding:20px; }
+  .device-selection { display:flex; justify-content:center; gap:20px; margin-top:50px; }
+  .device-card { border:1px solid #ccc; border-radius:8px; padding:10px; cursor:pointer; width:150px; }
+  .device-card img { max-width:100%; height:auto; display:block; margin:0 auto; }
+</style>
+</head>
+<body>
+
+<h2>اختر جهازك</h2>
+
+<div class="device-selection">
+  <div class="device-card" onclick="goToDevice('ipad')">
+    <img src="ipadPR.png" alt="iPad">
+  </div>
+  <div class="device-card" onclick="goToDevice('phone')">
+    <img src="phonePR.png" alt="Phone">
+  </div>
+</div>
+
+<script>
+  function goToDevice(device) {
+    if(device === 'ipad'){
+      window.location.href = 'ipad.html';
+    } else {
+      window.location.href = 'phone.html';
+    }
+  }
+</script>
+
+</body>
+</html>

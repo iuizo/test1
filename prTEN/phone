@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iPad Stickers Final</title>
+<style>
+  body {
+    font-family: Arial;
+    margin:0; padding:0;
+    min-height: 100vh;
+    background:#ff7f50;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+
+  #bg-video{
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    z-index:-1;
+    opacity:0.4;
+  }
+
+  .container {
+    display: flex;
+    align-items: flex-start;
+    gap: 200px;
+    position: relative;
+  }
+
+  .device-wrapper {
+    position: relative;
+    width: 400px;
+  }
+
+  .device {
+    width: 100%;
+    display: block;
+  }
+
+  .stickers {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-auto-rows: 100px;
+    gap: 10px;
+  }
+
+  .stickers img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    cursor: pointer;
+  }
+
+  a.back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color:white;
+    text-decoration:none;
+    font-size:1.2rem;
+  }
+
+  button#clearAll {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 8px 12px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<video autoplay muted loop id="bg-video">
+  <source src="bkg.mp4" type="video/mp4">
+</video>
+
+<a href="in12.html" class="back">⬅ رجوع للرئيسية</a>
+<button id="clearAll">مسح كل الاستيكرات</button>
+
+<div class="container">
+  <div class="device-wrapper" id="ipadWrapper">
+    <img src="phonePR.png" alt="iPad" class="device" id="ipad">
+  </div>
+
+  <div class="stickers">
+    <img src="st1.png">
+    <img src="st2.png">
+    <img src="st3.png">
+    <img src="st4.png">
+    <img src="st5.png">
+    <img src="st6.png">
+    <img src="st7.png">
+    <img src="st8.png">
+    <img src="st9.png">
+    <img src="st10.png">
+    <img src="st11.png">
+    <img src="st12.png">
+    <img src="st13.png">
+    <img src="st14.png">
+    <img src="st15.png">
+    <img src="st16.png">
+  </div>
+</div>
+
+<script>
+const ipadWrapper = document.getElementById('ipadWrapper');
+const stickers = document.querySelectorAll('.stickers img');
+const clearBtn = document.getElementById('clearAll');
+
+stickers.forEach(sticker => {
+  sticker.addEventListener('mousedown', e => {
+    e.preventDefault();
+    const newSticker = document.createElement('img');
+    newSticker.src = e.target.src;
+    newSticker.style.position = 'absolute';
+    newSticker.style.width = '100px';
+    newSticker.style.cursor = 'grab';
+    ipadWrapper.appendChild(newSticker);
+
+    const rect = ipadWrapper.getBoundingClientRect();
+    let shiftX = e.clientX - rect.left - 50;
+    let shiftY = e.clientY - rect.top - 50;
+
+    newSticker.style.left = shiftX + 'px';
+    newSticker.style.top = shiftY + 'px';
+
+    let isDragging = false;
+
+    function onMouseMove(e) {
+      isDragging = true;
+      let newX = e.clientX - rect.left - 50;
+      let newY = e.clientY - rect.top - 50;
+
+      // الحد داخل الآيباد
+      newX = Math.max(0, Math.min(rect.width - 100, newX));
+      newY = Math.max(0, Math.min(rect.height - 100, newY));
+
+      newSticker.style.left = newX + 'px';
+      newSticker.style.top = newY + 'px';
+    }
+
+    document.addEventListener('mousemove', onMouseMove);
+
+    newSticker.onmouseup = function() {
+      document.removeEventListener('mousemove', onMouseMove);
+      newSticker.onmouseup = null;
+    }
+
+    // حذف الاستيكر فقط إذا ضغطت بدون سحب
+    newSticker.addEventListener('click', e => {
+      if(!isDragging) newSticker.remove();
+    });
+  });
+});
+
+// مسح كل الاستيكرات
+clearBtn.addEventListener('click', () => {
+  const placedStickers = ipadWrapper.querySelectorAll('img');
+  placedStickers.forEach(img => {
+    if(!img.classList.contains('device')) img.remove();
+  });
+});
+</script>
+
+</body>
+</html>
